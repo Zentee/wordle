@@ -8,10 +8,6 @@ export default function GuessInput({ answer }) {
   const [savedInput, setSavedInput] = useState([]);
   const maxGuess = NUM_OF_GUESSES_ALLOWED;
 
-  // this will print the current answer
-  console.log(answer);
-  console.log(savedInput);
-
   function handleSubmit(event) {
     event.preventDefault();
     if (savedInput.length === maxGuess) return;
@@ -23,7 +19,7 @@ export default function GuessInput({ answer }) {
 
   return (
     <form class="guess-input-wrapper" onSubmit={handleSubmit}>
-      <Guess savedInput={savedInput} />
+      <Guess answer={answer} savedInput={savedInput} />
       {/*       {savedInput.map((ele) => {
         return (
           <PreviousGuess key={Math.random() * 1000} previousGuessArray={ele} />
