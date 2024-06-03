@@ -1,5 +1,4 @@
 import { useState } from "react";
-import PreviousGuess from "../PreviousGuess";
 import { NUM_OF_GUESSES_ALLOWED } from "../../constants";
 import Guess from "../Guess";
 
@@ -20,11 +19,6 @@ export default function GuessInput({ answer }) {
   return (
     <form class="guess-input-wrapper" onSubmit={handleSubmit}>
       <Guess answer={answer} savedInput={savedInput} />
-      {/*       {savedInput.map((ele) => {
-        return (
-          <PreviousGuess key={Math.random() * 1000} previousGuessArray={ele} />
-        );
-      })} */}
       <label for="guess-input">
         {savedInput.length > maxGuess ? "Enough Guesses." : "Enter guess:"}
       </label>
