@@ -2,12 +2,13 @@ import { useState } from "react";
 import { NUM_OF_GUESSES_ALLOWED } from "../../constants";
 import Guess from "../Guess";
 
-export default function GuessInput({ answer }) {
+export default function GuessInput({ answer, onNewGame }) {
   const [textInput, setTextInput] = useState("");
   const [savedInput, setSavedInput] = useState([]);
+
   const maxGuess = NUM_OF_GUESSES_ALLOWED;
   let won = false;
-  let isPlaying = false;
+  let isNewGame = false;
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -18,12 +19,19 @@ export default function GuessInput({ answer }) {
     setTextInput("");
   }
 
+  function handleRestart() {
+    setTextInput("");
+    setSavedInput([]);
+    onNewGame();
+    isNewGame = false;
+  }
+
   if (savedInput.includes(answer)) {
     won = true;
   }
 
   if (savedInput.length === maxGuess) {
-    isPlaying = true;
+    isNewGame = true;
   }
 
   return (
@@ -38,7 +46,7 @@ export default function GuessInput({ answer }) {
           value={textInput}
           minLength={5}
           maxLength={5}
-          disabled={isPlaying}
+          disabled={isNewGame}
           onChange={(event) => setTextInput(event.target.value)}
           type="text"
         />
@@ -51,11 +59,14 @@ export default function GuessInput({ answer }) {
           </p>
         </div>
       )}
-      {isPlaying && (
+      {isNewGame && (
         <div class="sad banner">
           <p>
-            Sorry, the correct answer is <strong>LEARN</strong>.
+            Sorry, the correct answer is <strong>{answer}</strong>.
           </p>
+          <button class="restart" onClick={handleRestart}>
+            Restart
+          </button>
         </div>
       )}
     </>
